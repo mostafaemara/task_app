@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:task/ui/screens/login/login_screen.dart';
-import 'package:task/ui/screens/signup/signup_screen.dart';
-import 'package:task/ui/screens/styles/app_theme.dart';
+
+import 'package:task/src/controller/auth_controller.dart';
+import 'package:task/src/controller/cities_controller.dart';
+import 'package:task/src/services/cities_service.dart';
+import 'package:task/src/services/user_database_service.dart';
+
+import 'src/routes/routes.dart';
+
+import 'src/services/auth_service.dart';
+import 'src/ui/styles/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-
+  final userDatabaseService = UserDatabaseService();
+  await userDatabaseService.init();
+  Get.put(userDatabaseService);
   runApp(const MyApp());
 }
 
@@ -20,9 +26,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut(() => AuthService());
+        Get.put(CitiesService());
+        Get.put(AuthController());
+        Get.put<CitiesController>(CitiesController());
+      }),
+      initialRoute: Routes.splash,
+      getPages: Routes.routes,
+      title: 'task',
       theme: AppTheme.lightTheme,
-      home: const SignupScreen(),
     );
   }
 }
