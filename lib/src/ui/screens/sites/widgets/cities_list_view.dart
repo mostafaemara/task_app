@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:task/src/controller/cities_controller.dart';
+
 import 'package:task/src/data/model/city.dart';
 
 import 'package:task/src/ui/screens/sites/widgets/city_list_item.dart';
@@ -16,7 +15,9 @@ class CitiesListView extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(
-          cities.length, (index) => CityListItem(city: cities[index])),
+          cities.length,
+          (index) => CityListItem(
+              key: Key(cities[index].id.toString()), city: cities[index])),
     );
   }
 }

@@ -2,16 +2,9 @@ import 'location.dart';
 import 'site.dart';
 
 class City {
-  final int id;
-  final String name;
-  final String cover;
-  final List<Site> sites;
-  final int rate;
-  final Location location;
-  final int diveSites;
-
   City(
-      {required this.id,
+      {required this.images,
+      required this.id,
       required this.name,
       required this.cover,
       required this.sites,
@@ -21,12 +14,23 @@ class City {
 
   factory City.fromMap(Map<String, dynamic> map) {
     return City(
-        id: map["id"].toInt(),
+        images: List<String>.from(map["images"].map((x) => x)),
+        id: map["id"],
         name: map["name"],
         cover: map["cover"],
-        sites: List.generate(3, (index) => Site()).toList(),
-        rate: map["rate"].toInt(),
+        sites: List<Site>.from(map["sites"].map((x) => Site.fromMap(x))),
+        rate: map["rate"],
         location: Location.fromMap(map["location"]),
-        diveSites: map["dive_sites"].toInt());
+        diveSites: map["dive_sites"]);
   }
+
+  final int id;
+  final String name;
+  final String cover;
+  final List<Site> sites;
+  final int rate;
+  final Location location;
+  final int diveSites;
+
+  final List<String> images;
 }

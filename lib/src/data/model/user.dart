@@ -1,11 +1,4 @@
 class User {
-  final int id;
-  final String name;
-  final String email;
-  final String mobile;
-  final int counteryId;
-  final String token;
-
   User(
       {required this.name,
       required this.id,
@@ -33,4 +26,11 @@ class User {
       "token": token
     };
   }
+
+  final int id;
+  final String name;
+  final String email;
+  final String mobile;
+  final int counteryId;
+  final String token;
 }

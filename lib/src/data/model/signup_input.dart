@@ -1,10 +1,4 @@
 class SignupInputs {
-  final String email;
-  final String password;
-  final String mobile;
-  final String name;
-  final int countryId;
-
   SignupInputs(
       {required this.email,
       required this.password,
@@ -21,4 +15,10 @@ class SignupInputs {
       "country_id": 64 //leve this id static
     };
   }
+
+  final String email;
+  final String password;
+  final String mobile;
+  final String name;
+  final int countryId;
 }
