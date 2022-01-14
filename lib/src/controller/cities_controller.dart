@@ -8,27 +8,26 @@ import 'auth_controller.dart';
 
 class CitiesController extends GetxController with StateMixin<List<City>> {
   @override
-  void onReady() {
-    // called after the widget is rendered on screen
-
-    super.onReady();
+  void onInit() {
+    super.onInit();
     init();
   }
 
   void init() {
     final AuthController authController = Get.find();
     final CitiesService citiesService = Get.find();
-
-    authController.state.value.whenOrNull(
-      authenticated: (user) async {
-        try {
-          change([], status: RxStatus.loading());
-          final cities = await citiesService.readCities(user.token);
-          change(cities, status: RxStatus.success());
-        } catch (e) {
-          change([], status: RxStatus.error(e.toString()));
-        }
-      },
-    );
+    authController.state.listen((state) {
+      state.whenOrNull(
+        authenticated: (user) async {
+          try {
+            change([], status: RxStatus.loading());
+            final cities = await citiesService.readCities(user.token);
+            change(cities, status: RxStatus.success());
+          } catch (e) {
+            change([], status: RxStatus.error(e.toString()));
+          }
+        },
+      );
+    });
   }
 }
